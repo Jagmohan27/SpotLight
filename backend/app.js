@@ -22,7 +22,7 @@ if (!process.env.MONGO_URI) {
         });
 }
 
-app.use(cors());
+app.use(cors({ origin: '*', credentials: true }));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
