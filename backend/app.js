@@ -8,19 +8,41 @@ const path = require('path');
 
 const app = express();
 
-/* ---------- MongoDB CONNECTION ---------- */
+/* ---------- SERVERLESS-READY MONGODB CONNECTION ---------- */
 mongoose.set('strictQuery', false);
 mongoose.Promise = global.Promise;
 
-if (!process.env.MONGO_URI) {
-    console.warn('⚠️ MONGO_URI is not defined in environment variables');
-} else {
-    mongoose.connect(process.env.MONGO_URI)
-        .then(() => console.log('✅ MongoDB connected'))
-        .catch(err => {
-            console.error('❌ DB connection error:', err.message);
-        });
-}
+let isConnected = false;
+
+const connectDB = async () => {
+    if (isConnected || mongoose.connection.readyState >= 1) {
+        return;
+    }
+    if (!process.env.MONGO_URI) {
+        console.warn('⚠️ MONGO_URI is missing in environment variables');
+        throw new Error('MONGO_URI environment variable is missing');
+    }
+    await mongoose.connect(process.env.MONGO_URI, {
+        serverSelectionTimeoutMS: 5000,
+    });
+    isConnected = true;
+    console.log('✅ MongoDB connected');
+};
+
+// Database Connection Middleware for Vercel Serverless
+app.use(async (req, res, next) => {
+    // Skip DB connection for basic root health check
+    if (req.path === '/') {
+        return next();
+    }
+    try {
+        await connectDB();
+        next();
+    } catch (err) {
+        console.error('❌ DB Middleware Error:', err.message);
+        return res.status(500).json({ error: 'Database connection failed: ' + err.message });
+    }
+});
 
 app.use(cors({ origin: '*', credentials: true }));
 app.use(bodyParser.json());
@@ -29,35 +51,32 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 const PORT = process.env.PORT || 8000;
 
-/* ---------- ROUTES ---------- */
-
 // Root route — health check
 app.get('/', (req, res) => {
     res.json({ message: 'Spotlight Backend API is running 🚀', status: 'online' });
 });
 
 // Auth API
-const authRouter = require('./routes/auth.js');
-app.use('/auth', authRouter);
+app.use('/auth', require('./routes/auth.js'));
 
 // Posts API
-const postRouter = require('./routes/post.js');
-app.use('/posts', postRouter);
+app.use('/posts', require('./routes/post.js'));
 
-// Only listen if executed directly (e.g. node app.js locally)
-if (require.main === module) {
-    app.listen(PORT, () =>
-        console.log(`🚀 Server running → http://localhost:${PORT}`)
-    );
-}
-
-app.use((req, res, next) => {
+// 404 handler
+app.use((req, res) => {
     res.status(404).json({ error: 'Route not found' });
 });
 
+// Error handling middleware
 app.use((err, req, res, next) => {
-    console.error(err.stack);
-    res.status(err.statusCode || 500).json({ error: err.message || 'Internal Server Error' });
+    console.error('Server error:', err);
+    res.status(500).json({ error: err.message || 'Internal server error' });
 });
+
+if (process.env.NODE_ENV !== 'production' || require.main === module) {
+    app.listen(PORT, () => {
+        console.log(`🚀 Server running → http://localhost:${PORT}`);
+    });
+}
 
 module.exports = app;
