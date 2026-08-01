@@ -1,0 +1,73 @@
+/* Apple Design System Tokens & Base Reset */
+:root {
+  --sf-font: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "SF Pro", "Inter", sans-serif;
+  --apple-bg: #f5f5f7;
+  --apple-card-bg: #ffffff;
+  --apple-text-primary: #1d1d1f;
+  --apple-text-secondary: #86868b;
+  --apple-text-tertiary: #6e6e73;
+  --apple-blue: #0071e3;
+  --apple-blue-hover: #0077ed;
+  --apple-purple: #bf5af2;
+  --apple-pink: #ff375f;
+  --apple-indigo: #5e5ce6;
+  --apple-hairline: rgba(0, 0, 0, 0.08);
+  --apple-hairline-dark: rgba(255, 255, 255, 0.12);
+  --apple-radius-sm: 12px;
+  --apple-radius-md: 18px;
+  --apple-radius-lg: 24px;
+  --apple-radius-pill: 9999px;
+  --apple-shadow-subtle: 0 4px 20px rgba(0, 0, 0, 0.04), 0 1px 3px rgba(0, 0, 0, 0.02);
+  --apple-shadow-hover: 0 16px 36px rgba(0, 0, 0, 0.08), 0 4px 12px rgba(0, 0, 0, 0.03);
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--apple-bg);
+  color: var(--apple-text-primary);
+  font-family: var(--sf-font);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  letter-spacing: -0.011em;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 600;
+  letter-spacing: -0.022em;
+  color: var(--apple-text-primary);
+}
+
+a {
+  color: var(--apple-blue);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+a:hover {
+  color: var(--apple-blue-hover);
+}
+
+/* Scrollbar refinement */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.18);
+  border-radius: var(--apple-radius-pill);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.28);
+}
