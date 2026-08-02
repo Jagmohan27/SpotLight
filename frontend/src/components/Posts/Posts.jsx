@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { BASE_URL } from "../../config";
+import "./Posts.css";
 
 export default function Posts() {
   const [posts, setPosts] = useState([]);
@@ -9,6 +10,18 @@ export default function Posts() {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const searchQuery = searchParams.get("search") || "";
+  const selectedCategory = searchParams.get("category") || "All";
+
+  const categoriesList = [
+    "All",
+    "Technology",
+    "Education",
+    "Entertainment",
+    "Sports & Fitness",
+    "Gaming",
+    "Cultural Event",
+    "Games",
+  ];
 
   useEffect(() => {
     fetch(`${BASE_URL}/posts`)
@@ -26,22 +39,38 @@ export default function Posts() {
       });
   }, []);
 
-  // Filter posts by category (case-insensitive partial match)
-  const filteredPosts = searchQuery
-    ? posts.filter((post) =>
-        post.category.toLowerCase().includes(searchQuery.toLowerCase())
-      )
-    : posts;
+  const handleCategorySelect = (cat) => {
+    if (cat === "All") {
+      const params = new URLSearchParams(searchParams);
+      params.delete("category");
+      setSearchParams(params);
+    } else {
+      setSearchParams({ ...Object.fromEntries(searchParams), category: cat });
+    }
+  };
 
-  const clearSearch = () => {
+  // Filter posts by category & search query
+  const filteredPosts = posts.filter((post) => {
+    const matchesCategory =
+      selectedCategory === "All" ||
+      (post.category && post.category.toLowerCase() === selectedCategory.toLowerCase());
+    const matchesSearch =
+      !searchQuery ||
+      (post.category && post.category.toLowerCase().includes(searchQuery.toLowerCase())) ||
+      (post.description && post.description.toLowerCase().includes(searchQuery.toLowerCase()));
+
+    return matchesCategory && matchesSearch;
+  });
+
+  const clearFilters = () => {
     setSearchParams({});
   };
 
   if (loading) {
     return (
-      <div className="posts-loading-container">
-        <div className="posts-spinner"></div>
-        <p className="posts-loading-text">Loading posts...</p>
+      <div className="pinterest-loading-container">
+        <div className="pinterest-spinner"></div>
+        <p className="pinterest-loading-text">Inspirations loading...</p>
       </div>
     );
   }
@@ -57,91 +86,132 @@ export default function Posts() {
   }
 
   return (
-    <div className="posts-page">
-      {/* Header */}
-      <div className="posts-header">
-        <div className="container">
-          <div className="posts-header-content">
-            <h1 className="posts-header-title">
-              Explore <span className="gradient-text">All Posts</span>
-            </h1>
-            <p className="posts-header-subtitle">
-              Discover what the community is sharing — from education to entertainment and everything in between.
-            </p>
+    <div className="pinterest-explore-page">
+      {/* Pinterest Top Header & Filter Bar */}
+      <div className="pinterest-header-wrapper">
+        <div className="container text-center">
+          <h1 className="pinterest-title">Explore Ideas & Community Pins</h1>
+          <p className="pinterest-subtitle">
+            Discover curated visual posts, educational topics, cultural moments, and tech innovations.
+          </p>
+
+          {/* Pinterest Category Filter Pills */}
+          <div className="pinterest-categories-bar">
+            {categoriesList.map((cat) => (
+              <button
+                key={cat}
+                className={`pinterest-category-pill ${selectedCategory === cat && !searchQuery ? "active" : ""}`}
+                onClick={() => handleCategorySelect(cat)}
+              >
+                {cat}
+              </button>
+            ))}
           </div>
         </div>
       </div>
 
-      {/* Posts Grid */}
-      <div className="container posts-grid-wrapper">
-        {/* Active search filter indicator */}
-        {searchQuery && (
-          <div className="posts-search-filter">
+      {/* Active Search / Filter Indicator */}
+      <div className="container">
+        {(searchQuery || selectedCategory !== "All") && (
+          <div className="pinterest-filter-indicator">
             <span>
-              Showing results for category: <strong>"{searchQuery}"</strong>
-              {" "}({filteredPosts.length} {filteredPosts.length === 1 ? "post" : "posts"})
+              Showing pins for:{" "}
+              <strong>
+                {selectedCategory !== "All" ? selectedCategory : `"${searchQuery}"`}
+              </strong>{" "}
+              ({filteredPosts.length} {filteredPosts.length === 1 ? "pin" : "pins"})
             </span>
-            <button className="posts-clear-search-btn" onClick={clearSearch}>
-              <i className="fa-solid fa-xmark"></i> Clear
+            <button className="pinterest-clear-btn" onClick={clearFilters}>
+              <i className="fa-solid fa-xmark"></i> Clear Filters
             </button>
           </div>
         )}
 
+        {/* Pinterest Masonry Pin Grid */}
         {filteredPosts.length === 0 ? (
-          <div className="posts-empty">
-            <i className="fa-regular fa-face-meh posts-empty-icon"></i>
-            <h3>{searchQuery ? "No posts found" : "No posts yet"}</h3>
-            <p>
-              {searchQuery
-                ? `No posts match the category "${searchQuery}".`
-                : "Be the first to share something with the community!"}
-            </p>
-            {searchQuery && (
-              <button className="btn btn-primary mt-2" onClick={clearSearch}>
-                View All Posts
-              </button>
-            )}
+          <div className="pinterest-empty-state">
+            <i className="fa-brands fa-pinterest pinterest-empty-icon"></i>
+            <h3>No pins found</h3>
+            <p>Try clearing filters or search for another keyword.</p>
+            <button className="pinterest-reset-btn" onClick={clearFilters}>
+              View All Pins
+            </button>
           </div>
         ) : (
-          <div className="posts-grid">
+          <div className="pinterest-masonry-grid">
             {filteredPosts.map((post) => (
-              <Link to={`/posts/${post._id}`} className="post-card-link" key={post._id}>
-                <div className="post-card">
-                  {post.image && post.image.url && (
-                    <div className="post-card-img-wrapper">
-                      <img
-                        src={
-                          post.image.url.includes("?")
-                            ? post.image.url
-                            : `${post.image.url}?w=400&auto=format&fit=crop&q=75`
-                        }
-                        alt={post.category || "Post image"}
-                        className="post-card-img"
-                        loading="lazy"
-                        onError={(e) => {
-                          e.target.onerror = null;
-                          e.target.src = "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=600&q=80";
-                        }}
-                      />
-                      <div className="post-card-img-overlay"></div>
+              <div className="pinterest-pin-wrapper" key={post._id}>
+                <Link to={`/posts/${post._id}`} className="pinterest-pin-link">
+                  <div className="pinterest-pin-card">
+                    {/* Image Container */}
+                    <div className="pinterest-pin-img-wrapper">
+                      {post.image && post.image.url ? (
+                        <img
+                          src={post.image.url}
+                          alt={post.category || "Spotlight pin"}
+                          className="pinterest-pin-img"
+                          loading="lazy"
+                          onError={(e) => {
+                            e.target.onerror = null;
+                            e.target.src =
+                              "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=600&q=80";
+                          }}
+                        />
+                      ) : (
+                        <div className="pinterest-pin-placeholder">
+                          <span>{post.category}</span>
+                        </div>
+                      )}
+
+                      {/* Pinterest Hover Overlay */}
+                      <div className="pinterest-pin-overlay">
+                        <div className="pinterest-overlay-top">
+                          <span className="pinterest-pin-badge">{post.category}</span>
+                          <button
+                            className="pinterest-save-btn"
+                            onClick={(e) => {
+                              e.preventDefault();
+                              e.stopPropagation();
+                              alert(`Saved "${post.category}" pin to your board!`);
+                            }}
+                          >
+                            Save
+                          </button>
+                        </div>
+                        <div className="pinterest-overlay-bottom">
+                          <div className="pinterest-author-pill">
+                            <i className="fa-solid fa-circle-user"></i>
+                            <span>{post.owner ? post.owner.username || post.owner : "Creator"}</span>
+                          </div>
+                        </div>
+                      </div>
                     </div>
-                  )}
-                  <div className="post-card-body">
-                    <span className="post-card-category">{post.category}</span>
-                    {/* <p className="post-card-description">{post.description}</p> */}
-                    <div className="post-card-footer">
-                      <span className="post-card-date">
-                        <i className="fa-regular fa-clock"></i>
-                        {new Date(post.date).toLocaleDateString("en-US", {
-                          month: "short",
-                          day: "numeric",
-                          year: "numeric",
-                        })}
-                      </span>
+
+                    {/* Pin Info Below Image */}
+                    <div className="pinterest-pin-info">
+                      <h4 className="pinterest-pin-title">
+                        {post.description
+                          ? post.description.length > 55
+                            ? post.description.substring(0, 55) + "..."
+                            : post.description
+                          : post.category}
+                      </h4>
+                      <div className="pinterest-pin-meta">
+                        <span className="pinterest-pin-comments">
+                          <i className="fa-regular fa-comment"></i>
+                          {post.comment ? post.comment.length : 0}
+                        </span>
+                        <span className="pinterest-pin-date">
+                          {new Date(post.date).toLocaleDateString("en-US", {
+                            month: "short",
+                            day: "numeric",
+                          })}
+                        </span>
+                      </div>
                     </div>
                   </div>
-                </div>
-              </Link>
+                </Link>
+              </div>
             ))}
           </div>
         )}
@@ -149,4 +219,3 @@ export default function Posts() {
     </div>
   );
 }
-
