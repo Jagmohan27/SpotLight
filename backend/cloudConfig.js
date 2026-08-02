@@ -26,7 +26,7 @@ if (
         cloudinary: cloudinary,
         params: {
             folder: 'spotlight_DEV',
-            allowed_formats: ['png', 'jpg', 'jpeg', 'webp', 'avif', 'svg'],
+            allowed_formats: ['png', 'jpg', 'jpeg', 'webp', 'avif', 'svg', 'gif', 'heic', 'heif', 'jfif', 'bmp'],
         },
     });
 } else {

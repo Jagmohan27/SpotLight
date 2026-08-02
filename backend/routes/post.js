@@ -20,7 +20,15 @@ router.get("/", async (req, res) => {
 });
 
 // POST /posts — create a new post (requires login)
-router.post("/", authenticateToken, upload.single("image"), async (req, res) => {
+router.post("/", authenticateToken, (req, res, next) => {
+    upload.single("image")(req, res, (err) => {
+        if (err) {
+            console.error("Multer upload error:", err.message);
+            return res.status(400).json({ error: "Image upload failed: " + (err.message || "Unsupported image format") });
+        }
+        next();
+    });
+}, async (req, res) => {
     try {
         const { category, description } = req.body;
 
