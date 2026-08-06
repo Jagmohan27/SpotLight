@@ -14,7 +14,7 @@
   },
   "name": "spotlight-backend",
   "version": "1.0.0",
-  "description": "",
+  "description": "Spotlight Fullstack RESTful API Server",
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
