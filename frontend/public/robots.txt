@@ -1,0 +1,10 @@
+# Spotlight Web Application - Search Engine Crawler Directives
+User-agent: *
+Allow: /
+Allow: /posts
+Disallow: /login
+Disallow: /register
+Disallow: /posts/new
+
+# Host & Sitemap
+Sitemap: https://spotlight-frontend-vert.vercel.app/sitemap.xml
