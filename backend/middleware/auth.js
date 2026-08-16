@@ -13,6 +13,9 @@ module.exports = function authenticateToken(req, res, next) {
     req.user = decoded; // { id, username, iat, exp }
     next();
   } catch (err) {
-    return res.status(403).json({ error: "Invalid or expired token." });
+    if (err.name === "TokenExpiredError") {
+      return res.status(401).json({ error: "Session expired. Please log in again." });
+    }
+    return res.status(403).json({ error: "Invalid authentication token." });
   }
 };
