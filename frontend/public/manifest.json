@@ -1,0 +1,15 @@
+{
+  "short_name": "Spotlight",
+  "name": "Spotlight - Community Social Platform",
+  "icons": [
+    {
+      "src": "favicon.svg",
+      "type": "image/svg+xml",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "/",
+  "background_color": "#ffffff",
+  "theme_color": "#0071e3",
+  "display": "standalone"
+}
