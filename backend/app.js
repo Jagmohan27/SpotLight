@@ -56,6 +56,7 @@ app.use(async (req, res, next) => {
 });
 
 app.use(cors({ origin: '*', credentials: true }));
+app.options('*', cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
