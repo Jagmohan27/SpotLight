@@ -68,6 +68,9 @@ router.post("/", authenticateToken, (req, res, next) => {
 
 // GET /posts/:id — return a single post
 router.get("/:id", async (req, res) => {
+    if (!require("mongoose").Types.ObjectId.isValid(req.params.id)) {
+        return res.status(400).json({ error: "Invalid post ID format" });
+    }
     try {
         const post = await Post.findById(req.params.id)
             .populate("owner", "username")
