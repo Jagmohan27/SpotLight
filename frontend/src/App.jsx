@@ -12,6 +12,16 @@ import Register from "./components/Register/Register.jsx";
 import Login from "./components/Login/Login.jsx";
 import ProtectedRoute from "./components/ProtectedRoute.jsx";
 
+
+const NotFound = () => (
+  <div className="container text-center py-5 my-5">
+    <h1 className="display-1 fw-bold text-primary">404</h1>
+    <h2 className="mb-3">Page Not Found</h2>
+    <p className="text-secondary mb-4">The page you are looking for does not exist or has been moved.</p>
+    <a href="/" className="btn btn-primary rounded-pill px-4">Back to Home</a>
+  </div>
+);
+
 function App() {
   return (
     <>
@@ -40,6 +50,7 @@ function App() {
           />
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
         <Footer />
       </BrowserRouter>
