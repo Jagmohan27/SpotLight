@@ -140,12 +140,12 @@ export default function ShowPost() {
 
   if (error) {
     return (
-      <div className="show-error-container">
-        <i className="fa-solid fa-triangle-exclamation show-error-icon"></i>
-        <h3>Something went wrong</h3>
-        <p>{error}</p>
-        <Link to="/posts" className="show-back-link">
-          <i className="fa-solid fa-arrow-left"></i> Back to Posts
+      <div className="show-error-container text-center py-5 my-4">
+        <i className="fa-solid fa-circle-exclamation text-warning display-4 mb-3"></i>
+        <h3>Unable to load post</h3>
+        <p className="text-secondary mb-4">{error}</p>
+        <Link to="/posts" className="btn btn-primary rounded-pill px-4">
+          <i className="fa-solid fa-arrow-left me-2"></i> Back to Explore
         </Link>
       </div>
     );
