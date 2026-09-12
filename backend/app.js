@@ -8,6 +8,17 @@ const path = require('path');
 
 const app = express();
 
+/* ---------- REQUEST LOGGING MIDDLEWARE ---------- */
+app.use((req, res, next) => {
+    const start = Date.now();
+    res.on('finish', () => {
+        const duration = Date.now() - start;
+        console.log(`[API] ${req.method} ${req.path} -> ${res.statusCode} (${duration}ms)`);
+    });
+    next();
+});
+
+
 /* ---------- SECURITY HARDENING HEADERS ---------- */
 app.disable('x-powered-by');
 app.use((req, res, next) => {
