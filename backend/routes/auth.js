@@ -79,7 +79,7 @@ router.post("/login", async (req, res) => {
     }
 
     // Find user by username
-    const user = await User.findOne({ username });
+    const user = await User.findOne({ username: username.trim() });
     if (!user) {
       return res.status(401).json({ error: "Invalid username or password" });
     }
