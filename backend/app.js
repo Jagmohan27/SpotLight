@@ -68,6 +68,17 @@ app.get('/', (req, res) => {
     res.json({ message: 'Spotlight Backend API is running 🚀', status: 'online' });
 });
 
+// Detailed system health & diagnostics endpoint
+app.get('/health', (req, res) => {
+    res.json({
+        status: 'online',
+        uptime: process.uptime(),
+        timestamp: new Date().toISOString(),
+        database: mongoose.connection.readyState === 1 ? 'connected' : 'disconnected',
+        environment: process.env.NODE_ENV || 'development'
+    });
+});
+
 // Auth API
 app.use('/auth', require('./routes/auth.js'));
 
