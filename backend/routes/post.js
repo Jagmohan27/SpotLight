@@ -90,6 +90,9 @@ router.get("/:id", async (req, res) => {
 
 // POST /posts/:id/comments — add a comment to a post (requires login)
 router.post("/:id/comments", authenticateToken, async (req, res) => {
+    if (!require("mongoose").Types.ObjectId.isValid(req.params.id)) {
+        return res.status(400).json({ error: "Invalid post ID format" });
+    }
     try {
         const post = await Post.findById(req.params.id);
         if (!post) {
@@ -142,6 +145,9 @@ router.delete("/:id/comments/:commentId", authenticateToken, async (req, res) =>
 
 // PUT /posts/:id — edit/update a post (only owner)
 router.put("/:id", authenticateToken, upload.single("image"), async (req, res) => {
+    if (!require("mongoose").Types.ObjectId.isValid(req.params.id)) {
+        return res.status(400).json({ error: "Invalid post ID format" });
+    }
     try {
         const { category, description } = req.body;
         const post = await Post.findById(req.params.id);
