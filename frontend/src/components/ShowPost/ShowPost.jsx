@@ -34,6 +34,15 @@ export default function ShowPost() {
       });
   }, [id]);
 
+  useEffect(() => {
+    if (post) {
+      const titleSnippet = post.description
+        ? post.description.substring(0, 30)
+        : post.category;
+      document.title = `${titleSnippet} - Spotlight`;
+    }
+  }, [post]);
+
   const handleDelete = async () => {
     if (window.confirm("Are you sure you want to delete this post?")) {
       setDeleting(true);

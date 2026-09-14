@@ -53,6 +53,16 @@ export default function Posts() {
       });
   }, []);
 
+  useEffect(() => {
+    if (selectedCategory !== "All") {
+      document.title = `${selectedCategory} Posts - Spotlight`;
+    } else if (searchQuery) {
+      document.title = `Search: ${searchQuery} - Spotlight`;
+    } else {
+      document.title = "Explore Posts - Spotlight";
+    }
+  }, [selectedCategory, searchQuery]);
+
   const handleCategorySelect = (cat) => {
     if (cat === "All") {
       const params = new URLSearchParams(searchParams);
