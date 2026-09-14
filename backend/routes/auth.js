@@ -20,6 +20,7 @@ router.post("/register", async (req, res) => {
 
     // Validate required fields
     if (!username || !username.trim()) {
+      console.warn("[AUTH_VALIDATION] Missing username in registration payload");
       return res.status(400).json({ error: "Username is required" });
     }
     if (!email || !email.trim()) {
@@ -81,6 +82,7 @@ router.post("/login", async (req, res) => {
 
     // Validate required fields
     if (!username || !username.trim()) {
+      console.warn("[AUTH_VALIDATION] Missing username in registration payload");
       return res.status(400).json({ error: "Username is required" });
     }
     if (!password || !password.trim()) {
