@@ -11,11 +11,13 @@ const upload = multer({ storage });
 // GET /posts — return all posts
 router.get("/", async (req, res) => {
     try {
-        const allPosts = await Post.find({}).sort({ date: -1 }).populate("owner", "username");
-        res.status(200).json(allPosts);
+        const allPosts = await Post.find({})
+            .sort({ date: -1 })
+            .populate("owner", "username");
+        res.status(200).json(Array.isArray(allPosts) ? allPosts : []);
     } catch (err) {
         console.error("Error fetching posts:", err.message);
-        res.status(500).json({ error: "Failed to fetch posts" });
+        res.status(500).json([]);
     }
 });
 

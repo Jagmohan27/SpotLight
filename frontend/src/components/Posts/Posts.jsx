@@ -37,16 +37,18 @@ export default function Posts() {
 
   useEffect(() => {
     fetch(`${BASE_URL}/posts`)
-      .then((res) => {
-        if (!res.ok) throw new Error("Failed to fetch posts");
-        return res.json();
-      })
+      .then((res) => res.json())
       .then((data) => {
-        setPosts(data);
+        if (Array.isArray(data)) {
+          setPosts(data);
+        } else {
+          setPosts([]);
+          if (data && data.error) setError(data.error);
+        }
         setLoading(false);
       })
       .catch((err) => {
-        setError(err.message);
+        setError(err.message || "Failed to connect to server");
         setLoading(false);
       });
   }, []);
@@ -62,7 +64,9 @@ export default function Posts() {
   };
 
   // Filter posts by category & search query
-  const filteredPosts = posts.filter((post) => {
+  const safePosts = Array.isArray(posts) ? posts : [];
+  const filteredPosts = safePosts.filter((post) => {
+    if (!post) return false;
     const matchesCategory =
       selectedCategory === "All" ||
       (post.category && post.category.toLowerCase() === selectedCategory.toLowerCase());
