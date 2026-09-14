@@ -7,7 +7,7 @@ export default function RightSection({ category, isAlt = false }) {
   const exploreUrl = `/posts?category=${encodeURIComponent(category.tag)}`;
 
   return (
-    <section className={`category-section ${isAlt ? "category-section-alt" : ""}`}>
+    <section className={`category-section ${isAlt ? "category-section-alt" : ""}`} aria-label={`${category.tag} Category Section`}>
       <div className="container">
         <div className="row align-items-center category-card mb-0">
           {/* Content Left */}
