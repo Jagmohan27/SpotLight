@@ -4,6 +4,15 @@ const User = require("../models/user.js");
 
 const router = express.Router();
 
+// Anti-caching middleware for sensitive auth routes
+router.use((req, res, next) => {
+  res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate, private");
+  res.setHeader("Pragma", "no-cache");
+  res.setHeader("Expires", "0");
+  next();
+});
+
+
 // POST /auth/register — Sign up a new user
 router.post("/register", async (req, res) => {
   try {
