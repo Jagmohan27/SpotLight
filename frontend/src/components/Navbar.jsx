@@ -46,7 +46,7 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="navbar navbar-expand-lg navbar-light navbar-custom sticky-top py-2">
+    <nav className="navbar navbar-expand-lg navbar-light navbar-custom sticky-top py-2" aria-label="Main Navigation">
       <div className="container">
         {/* Brand/Logo */}
         <Link className="navbar-brand-custom" to="/">
