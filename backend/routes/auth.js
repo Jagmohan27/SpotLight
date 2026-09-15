@@ -3,6 +3,7 @@ const jwt = require("jsonwebtoken");
 const User = require("../models/user.js");
 
 const router = express.Router();
+const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 // Anti-caching middleware for sensitive auth routes
 router.use((req, res, next) => {
@@ -31,8 +32,8 @@ router.post("/register", async (req, res) => {
     }
 
     // Validate email format
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
+    // Validate email format via EMAIL_REGEX
+    if (!EMAIL_REGEX.test(email.trim())) {
       return res.status(400).json({ error: "Please enter a valid email address" });
     }
 
