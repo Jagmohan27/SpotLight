@@ -5,6 +5,7 @@ Allow: /posts
 Disallow: /login
 Disallow: /register
 Disallow: /posts/new
+Disallow: /posts/*/edit
 
 # Host & Sitemap
 Sitemap: https://spotlight-frontend-vert.vercel.app/sitemap.xml
