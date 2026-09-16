@@ -27,6 +27,7 @@ app.use((req, res, next) => {
 /* ---------- SECURITY HARDENING HEADERS ---------- */
 app.disable('x-powered-by');
 app.use((req, res, next) => {
+    res.setHeader('X-API-Version', '1.0.0');
     res.setHeader('X-Content-Type-Options', 'nosniff');
     res.setHeader('X-Frame-Options', 'SAMEORIGIN');
     res.setHeader('X-XSS-Protection', '1; mode=block');
