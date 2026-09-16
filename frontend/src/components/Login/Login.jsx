@@ -98,6 +98,7 @@ export default function Login() {
                 id="login-password"
                 name="password"
                 placeholder="Enter your password"
+                minLength={6}
                 value={formData.password}
                 onChange={handleChange}
                 required
