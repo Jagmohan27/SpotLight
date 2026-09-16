@@ -80,10 +80,11 @@ export default function Posts() {
     const matchesCategory =
       selectedCategory === "All" ||
       (post.category && post.category.toLowerCase() === selectedCategory.toLowerCase());
+    const cleanQuery = searchQuery.trim().toLowerCase();
     const matchesSearch =
-      !searchQuery ||
-      (post.category && post.category.toLowerCase().includes(searchQuery.toLowerCase())) ||
-      (post.description && post.description.toLowerCase().includes(searchQuery.toLowerCase()));
+      !cleanQuery ||
+      (post.category && post.category.toLowerCase().includes(cleanQuery)) ||
+      (post.description && post.description.toLowerCase().includes(cleanQuery));
 
     return matchesCategory && matchesSearch;
   });
