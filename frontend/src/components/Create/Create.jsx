@@ -171,6 +171,7 @@ export default function Create() {
                 id="description"
                 name="description"
                 rows="4"
+                maxLength={1000}
                 placeholder="Write something engaging about your post..."
                 value={formData.description}
                 onChange={handleChange}
