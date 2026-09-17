@@ -34,6 +34,8 @@ userSchema.pre("save", async function () {
 });
 
 // Compare candidate password with stored hash
+userSchema.index({ email: 1 });
+
 userSchema.methods.comparePassword = async function (candidatePassword) {
   return bcrypt.compare(candidatePassword, this.password);
 };
