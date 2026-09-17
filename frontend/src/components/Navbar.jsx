@@ -76,7 +76,7 @@ export default function Navbar() {
               className="form-control search-box-custom"
               type="search"
               placeholder="Search by category..."
-              aria-label="Search"
+              aria-label="Search Spotlight posts"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
