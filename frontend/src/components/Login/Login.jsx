@@ -78,6 +78,7 @@ export default function Login() {
                 className="form-control"
                 id="login-username"
                 name="username"
+                autoComplete="username"
                 placeholder="Enter your username"
                 value={formData.username}
                 onChange={handleChange}
