@@ -29,5 +29,6 @@ const postSchema = new Schema({
 
 postSchema.index({ date: -1 });
 postSchema.index({ category: 1 });
+postSchema.index({ owner: 1 });
 
 module.exports = mongoose.model("Post", postSchema);
