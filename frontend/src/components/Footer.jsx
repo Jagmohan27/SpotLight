@@ -6,7 +6,7 @@ export default function Footer() {
   };
 
   return (
-    <footer className="footer-custom mt-auto">
+    <footer className="footer-custom mt-auto" role="contentinfo">
       <div className="container">
         {/* Apple Legal Note */}
         <p className="footer-legal-text">
