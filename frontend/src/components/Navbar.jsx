@@ -49,7 +49,7 @@ export default function Navbar() {
     <nav className="navbar navbar-expand-lg navbar-light navbar-custom sticky-top py-2" aria-label="Main Navigation">
       <div className="container">
         {/* Brand/Logo */}
-        <Link className="navbar-brand-custom" to="/">
+        <Link className="navbar-brand-custom" to="/" aria-label="Spotlight Homepage">
           <i className="fa-solid fa-sparkles"></i>
           <span>Spotlight</span>
         </Link>
@@ -110,6 +110,7 @@ export default function Navbar() {
               <button
                 className="nav-link-custom dropdown-toggle"
                 type="button"
+                aria-label="User Account Menu"
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
                 style={{ background: "none", border: "none", cursor: "pointer" }}
