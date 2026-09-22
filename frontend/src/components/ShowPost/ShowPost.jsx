@@ -185,6 +185,7 @@ export default function ShowPost() {
                   src={post.image.url}
                   alt={post.category || "Post details"}
                   className="show-img"
+                  loading="lazy"
                   onError={(e) => {
                     e.target.onerror = null;
                     e.target.src = "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1000&q=80";
