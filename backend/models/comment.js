@@ -13,4 +13,7 @@ const commentSchema = new Schema({
   },
 });
 
+commentSchema.index({ author: 1 });
+commentSchema.index({ CreatedAt: -1 });
+
 module.exports = mongoose.model("Comment", commentSchema);
