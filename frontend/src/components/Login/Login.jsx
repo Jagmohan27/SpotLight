@@ -98,6 +98,7 @@ export default function Login() {
                 className="form-control"
                 id="login-password"
                 name="password"
+                autoComplete="current-password"
                 placeholder="Enter your password"
                 minLength={6}
                 value={formData.password}
