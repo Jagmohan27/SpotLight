@@ -35,6 +35,7 @@ app.use((req, res, next) => {
     res.setHeader('X-DNS-Prefetch-Control', 'off');
     res.setHeader('Strict-Transport-Security', 'max-age=31536000; includeSubDomains');
     res.setHeader('X-Permitted-Cross-Domain-Policies', 'none');
+    res.setHeader('X-Download-Options', 'noopen');
     next();
 });
 
