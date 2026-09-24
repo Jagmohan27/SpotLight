@@ -58,13 +58,13 @@ export default function Footer() {
             Copyright &copy; {new Date().getFullYear()} Spotlight Inc. All rights reserved.
           </div>
           <div className="d-flex gap-3">
-            <a href="#" onClick={handlePreventDefault}>Privacy Policy</a>
+            <a href="#" onClick={handlePreventDefault} aria-label="Privacy Policy">Privacy Policy</a>
             <span>|</span>
-            <a href="#" onClick={handlePreventDefault}>Terms of Use</a>
+            <a href="#" onClick={handlePreventDefault} aria-label="Terms of Use">Terms of Use</a>
             <span>|</span>
-            <a href="#" onClick={handlePreventDefault}>Sales Policy</a>
+            <a href="#" onClick={handlePreventDefault} aria-label="Sales Policy">Sales Policy</a>
             <span>|</span>
-            <a href="#" onClick={handlePreventDefault}>Legal</a>
+            <a href="#" onClick={handlePreventDefault} aria-label="Legal Notices">Legal</a>
           </div>
         </div>
       </div>
