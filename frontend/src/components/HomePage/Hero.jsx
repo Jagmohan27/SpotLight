@@ -77,10 +77,10 @@ export default function Hero() {
               <img src={hero1} className="d-block w-100 hero-img" alt="Connect with your circle" />
             </div>
             <div className="carousel-item h-100">
-              <img src={hero4} className="d-block w-100 hero-img" alt="Share your thoughts" />
+              <img src={hero4} className="d-block w-100 hero-img" alt="Share your thoughts" loading="lazy" />
             </div>
             <div className="carousel-item h-100">
-              <img src={hero3} className="d-block w-100 hero-img" alt="Belong to a community" />
+              <img src={hero3} className="d-block w-100 hero-img" alt="Belong to a community" loading="lazy" />
             </div>
           </div>
           
