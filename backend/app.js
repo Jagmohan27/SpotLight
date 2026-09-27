@@ -38,6 +38,7 @@ app.use((req, res, next) => {
     res.setHeader('X-Download-Options', 'noopen');
     res.setHeader('Cross-Origin-Opener-Policy', 'same-origin');
     res.setHeader('Cross-Origin-Resource-Policy', 'cross-origin');
+    res.setHeader('Permissions-Policy', 'geolocation=(), microphone=(), camera=()');
     next();
 });
 
