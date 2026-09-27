@@ -129,7 +129,7 @@ export default function Posts() {
           </p>
 
           {/* Category Filter Pills */}
-          <div className="spotlight-categories-bar">
+          <div className="spotlight-categories-bar" role="region" aria-label="Post category filters">
             {categoriesList.map((cat) => (
               <button
                 key={cat}
