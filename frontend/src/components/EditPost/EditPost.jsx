@@ -67,7 +67,7 @@ export default function EditPost() {
 
     const data = new FormData();
     data.append("category", formData.category);
-    data.append("description", formData.description);
+    data.append("description", formData.description.trim());
     if (newImage) {
       data.append("image", newImage);
     }
