@@ -55,7 +55,7 @@ export default function Create() {
     setSubmitting(true);
 
     const data = new FormData();
-    data.append("category", formData.category);
+    data.append("category", formData.category.trim());
     data.append("description", formData.description);
     data.append("image", image);
 
