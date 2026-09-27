@@ -184,6 +184,7 @@ export default function EditPost() {
               id="description"
               name="description"
               rows="4"
+              maxLength={1000}
               placeholder="Write something about your post..."
               value={formData.description}
               onChange={handleChange}
