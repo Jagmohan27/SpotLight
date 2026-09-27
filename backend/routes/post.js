@@ -21,6 +21,12 @@ router.get("/", async (req, res) => {
     }
 });
 
+// Anti-caching and protection middleware for post routes
+router.use((req, res, next) => {
+  res.setHeader("X-Content-Type-Options", "nosniff");
+  next();
+});
+
 // POST /posts — create a new post (requires login)
 router.post("/", authenticateToken, (req, res, next) => {
     upload.single("image")(req, res, (err) => {
