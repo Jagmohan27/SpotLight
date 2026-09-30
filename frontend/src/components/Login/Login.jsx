@@ -111,6 +111,7 @@ export default function Login() {
           <button
             type="submit"
             className="btn login-submit-btn"
+            aria-label="Submit Login Form"
             disabled={submitting}
           >
             {submitting ? (
