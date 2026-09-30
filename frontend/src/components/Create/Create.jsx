@@ -183,6 +183,7 @@ export default function Create() {
             <button
               type="submit"
               className="create-submit-btn"
+              aria-label="Publish New Spotlight Post"
               disabled={submitting}
             >
               {submitting ? (
