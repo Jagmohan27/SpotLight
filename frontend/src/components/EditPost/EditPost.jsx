@@ -197,6 +197,7 @@ export default function EditPost() {
             <button
               type="submit"
               className="btn edit-submit-btn"
+              aria-label="Save Post Changes"
               disabled={submitting}
             >
               {submitting ? (
