@@ -77,6 +77,7 @@ export default function Navbar() {
               type="search"
               placeholder="Search by category..."
               aria-label="Search Spotlight posts"
+              autoComplete="off"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
