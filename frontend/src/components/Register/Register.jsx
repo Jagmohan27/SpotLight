@@ -144,6 +144,7 @@ export default function Register() {
           <button
             type="submit"
             className="btn register-submit-btn"
+            aria-label="Submit Registration Form"
             disabled={submitting}
           >
             {submitting ? (
